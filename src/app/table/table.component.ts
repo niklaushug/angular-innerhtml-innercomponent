@@ -1,4 +1,10 @@
-import {Component, Injector, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver, ComponentRef,
+  Input,
+  OnInit,
+  ViewChild, ViewContainerRef,
+} from '@angular/core';
 import {isNgContainer} from "@angular/compiler";
 import {RatingComponent} from "../rating/rating.component";
 import {TooltipComponent} from "../tooltip/tooltip.component";
@@ -46,14 +52,29 @@ type TableHeader = string[]
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent {
+  @ViewChild('tooltipHost', {read: ViewContainerRef}) viewContainerRef!: ViewContainerRef
+
   @Input()
   data?: TableData
 
   // Pass enum to template
   format = CellFormat
 
-  ngOnInit(): void {
+  componentRef!: ComponentRef<any>
+
+  constructor(private cfr: ComponentFactoryResolver) {}
+
+  ngAfterViewInit(): void {
+    this.createComponent()
+  }
+
+  createComponent() {
+    this.viewContainerRef.clear();
+
+    const componentFactory = this.cfr.resolveComponentFactory(TooltipComponent)
+    this.componentRef = this.viewContainerRef.createComponent(componentFactory);
+    this.componentRef.instance.placement = 'right'
   }
 
   protected readonly isNgContainer = isNgContainer;
