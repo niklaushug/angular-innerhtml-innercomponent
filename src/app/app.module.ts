@@ -9,13 +9,17 @@ import { RatingComponent } from './rating/rating.component';
 import {RatingModule} from "ngx-bootstrap/rating";
 import {FormsModule} from "@angular/forms";
 import { TableComponent } from './table/table.component';
+import { CellComponent } from './cell/cell.component';
+import { CellComponentDirective } from './cell/cell-component.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     TooltipComponent,
     RatingComponent,
-    TableComponent
+    TableComponent,
+    CellComponent,
+    CellComponentDirective
   ],
   imports: [
     BrowserModule,

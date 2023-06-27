@@ -1,51 +1,40 @@
-import {
-  Component,
-  ComponentFactoryResolver, ComponentRef,
-  Input,
-  OnInit,
-  ViewChild, ViewContainerRef,
-} from '@angular/core';
-import {isNgContainer} from "@angular/compiler";
-import {RatingComponent} from "../rating/rating.component";
-import {TooltipComponent} from "../tooltip/tooltip.component";
-import {AvailbleBSPositions} from "ngx-bootstrap/positioning";
-export enum CellFormat {
+import {Component, Input } from '@angular/core';
+import {RatingComponent, RatingContextI} from "../rating/rating.component";
+import {TooltipComponent, TooltipContextI} from "../tooltip/tooltip.component";
+
+// TODO move all types to other file
+
+export type TableDataI = {
+  header: TableHeaderI
+  body: TableBodyI
+}
+
+type TableHeaderI = string[]
+
+type TableBodyI = TableRowDataI[]
+
+type TableRowDataI = TableCellContextI[]
+
+export type TableCellContextI = {
+  content: number | string | TableCellContentComponentI
+  format: TableCellFormatI
+}
+
+export type TableCellContentComponentI = {
+  // TODO replace any with RatingComponent | TooltipComponent
+  component: any
+  context: TableCellContentComponentContextI
+}
+
+export type TableCellComponentI = RatingComponent | TooltipComponent
+export type TableCellContentComponentContextI = RatingContextI | TooltipContextI
+
+export enum TableCellFormatI {
   Plain,
   InnerHtml,
   Percentage,
-  Tooltip,
-  Rating
+  Component
 }
-
-type RatingComponentI = {
-  component: RatingComponent
-  context: {
-    max: number,
-    rate: number
-  }
-}
-
-type TooltipComponentI = {
-  component: TooltipComponent
-  context: {
-    placement: AvailbleBSPositions
-  }
-}
-
-type CellData = {
-  content: number | string | RatingComponentI | TooltipComponentI,
-  format: CellFormat
-}
-
-type RowData = CellData[]
-type BodyData = RowData[]
-
-export type TableData = {
-  header: TableHeader
-  body: BodyData
-}
-
-type TableHeader = string[]
 
 @Component({
   selector: 'app-table',
@@ -53,29 +42,6 @@ type TableHeader = string[]
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent {
-  @ViewChild('tooltipHost', {read: ViewContainerRef}) viewContainerRef!: ViewContainerRef
-
   @Input()
-  data?: TableData
-
-  // Pass enum to template
-  format = CellFormat
-
-  componentRef!: ComponentRef<any>
-
-  constructor(private cfr: ComponentFactoryResolver) {}
-
-  ngAfterViewInit(): void {
-    this.createComponent()
-  }
-
-  createComponent() {
-    this.viewContainerRef.clear();
-
-    const componentFactory = this.cfr.resolveComponentFactory(TooltipComponent)
-    this.componentRef = this.viewContainerRef.createComponent(componentFactory);
-    this.componentRef.instance.placement = 'right'
-  }
-
-  protected readonly isNgContainer = isNgContainer;
+  data?: TableDataI
 }

@@ -1,0 +1,19 @@
+<ng-container *ngIf="cell" [ngSwitch]="cell.format">
+  <ng-container *ngSwitchCase="cellFormatI.Plain">
+    {{ cell.content }}
+  </ng-container>
+
+  <ng-container *ngSwitchCase="cellFormatI.Percentage">
+    {{ cell.content }}%
+  </ng-container>
+
+  <div *ngSwitchCase="cellFormatI.InnerHtml"
+     [innerHTML]="cell.content"
+  ></div>
+
+  <ng-container *ngSwitchCase="cellFormatI.Component">
+    <ng-container appCellComponent [content]="contentAsComponent"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>unhandled case</ng-container>
+</ng-container>

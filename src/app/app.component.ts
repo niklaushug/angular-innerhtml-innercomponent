@@ -2,9 +2,9 @@ import {Component} from '@angular/core';
 import {TooltipComponent} from "./tooltip/tooltip.component";
 import {RatingComponent} from "./rating/rating.component";
 
-import { TableData, CellFormat } from "./table/table.component";
+import { TableDataI, TableCellFormatI } from "./table/table.component";
 
-const tableData1: TableData = {
+const tableData1: TableDataI = {
   header: [
     'InnerHtml',
     'Component'
@@ -13,35 +13,35 @@ const tableData1: TableData = {
     [
       {
         content: '<span title="Smile">😄</span>',
-        format: CellFormat.InnerHtml
+        format: TableCellFormatI.InnerHtml
       }, {
         content: {
-          component: new TooltipComponent(),  // TODO do i really need keyword new and parentheses
+          component: TooltipComponent,
           context: {
             placement: 'right'
           }
         },
-        format: CellFormat.Tooltip
+        format: TableCellFormatI.Component
       }
     ], [
       {
         content: '<h6>Heading 3</h6>',
-        format: CellFormat.InnerHtml
+        format: TableCellFormatI.InnerHtml
       }, {
         content: {
-          component: new RatingComponent(),  // TODO do i really need keyword new and parentheses
+          component: RatingComponent,
           context: {
-            max: 5,
-            rate: 2
+            max: 10,
+            rate: 7
           }
         },
-        format: CellFormat.Rating
+        format: TableCellFormatI.Component
       }
     ]
   ]
 }
 
-const tableData2: TableData = {
+const tableData2: TableDataI = {
   header: [
     'Name',
     'Alter',
@@ -53,75 +53,75 @@ const tableData2: TableData = {
     [
       {
         content: 'Hans',
-        format: CellFormat.Plain
+        format: TableCellFormatI.Plain
       }, {
       content: '40',
-      format: CellFormat.Plain
+      format: TableCellFormatI.Plain
     }, {
       content: '98',
-      format: CellFormat.Percentage
+      format: TableCellFormatI.Percentage
     }, {
       content: '<span title="Smile">😄</span>',
-      format: CellFormat.InnerHtml
+      format: TableCellFormatI.InnerHtml
     }, {
       content: {
-        component: new TooltipComponent(),  // TODO do i really need keyword new and parentheses
+        component: TooltipComponent,
         context: {
-          placement: 'right'
+          placement: 'top'
         }
       },
-      format: CellFormat.Tooltip
+      format: TableCellFormatI.Component
     }
     ], [
       {
         content: 'Rita',
-        format: CellFormat.Plain
+        format: TableCellFormatI.Plain
       }, {
         content: '35',
-        format: CellFormat.Plain
+        format: TableCellFormatI.Plain
       }, {
         content: '77',
-        format: CellFormat.Percentage
+        format: TableCellFormatI.Percentage
       }, {
         content: '<h6>Heading 3</h6>',
-        format: CellFormat.InnerHtml
+        format: TableCellFormatI.InnerHtml
       }, {
         content: {
-          component: new RatingComponent(),  // TODO do i really need keyword new and parentheses
+          component: RatingComponent,
           context: {
-            max: 5,
-            rate: 2
+            max: 6,
+            rate: 3
           }
         },
-        format: CellFormat.Rating
+        format: TableCellFormatI.Component
       }
     ], [
       {
         content: 'Bruno',
-        format: CellFormat.Plain
+        format: TableCellFormatI.Plain
       }, {
         content: '65',
-        format: CellFormat.Plain
+        format: TableCellFormatI.Plain
       }, {
         content: '53',
-        format: CellFormat.Percentage
+        format: TableCellFormatI.Percentage
       }, {
         content: {
-          component: new TooltipComponent(),  // TODO do i really need keyword new and parentheses
+          component: TooltipComponent,
           context: {
             placement: 'bottom'
           }
         },
-        format: CellFormat.Tooltip
+        format: TableCellFormatI.Component
       }, {
         content: {
-          component: new RatingComponent(),  // TODO do i really need keyword new and parentheses
+          component: RatingComponent,
           context: {
             max: 5,
             rate: 2
           }
         },
-        format: CellFormat.Rating
+        format: TableCellFormatI.Component
       }
     ]
   ]

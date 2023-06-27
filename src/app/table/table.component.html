@@ -1,47 +1,15 @@
 <table *ngIf="data">
   <thead>
-  <tr>
-    <th *ngFor="let header of data.header">{{ header }}</th>
-  </tr>
+    <tr>
+      <th *ngFor="let header of data.header">{{ header }}</th>
+    </tr>
   </thead>
 
   <tbody>
-  <tr *ngFor="let row of data.body">
-    <td *ngFor="let cell of row" [ngSwitch]="cell.format">
-      <ng-container *ngSwitchCase="format.Plain">{{ cell.content }}</ng-container>
-      <ng-container *ngSwitchCase="format.Percentage">{{ cell.content }}%</ng-container>
-      <div *ngSwitchCase="format.InnerHtml" [innerHTML]="cell.content">Inner HTMl</div>
-
-      <ng-container *ngSwitchCase="format.Tooltip">
-        <ng-container *ngTemplateOutlet="tooltipTmpl; context: $any(cell.content).context"></ng-container>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="format.Rating">
-        <ng-container *ngTemplateOutlet="ratingTmpl; context: $any(cell.content).context"></ng-container>
-      </ng-container>
-
-      <ng-container *ngSwitchDefault>unhandled case</ng-container>
-    </td>
-  </tr>
+    <tr *ngFor="let row of data.body">
+      <td *ngFor="let cell of row">
+        <app-cell [cell]="cell"></app-cell>
+      </td>
+    </tr>
   </tbody>
 </table>
-
-<hr>
-<ng-template #tooltipHost></ng-template>
-
-<hr>
-
-<ng-template
-  #tooltipTmpl
-  let-placement="placement"
->
-  <app-tooltip [placement]="placement"></app-tooltip>
-</ng-template>
-
-<ng-template
-  #ratingTmpl
-  let-max="max"
-  let-rate="rate"
->
-  <app-rating [max]="max" [rate]="rate"></app-rating><br>
-</ng-template>
